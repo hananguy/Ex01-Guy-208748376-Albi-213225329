@@ -1,13 +1,11 @@
-﻿using System;
+using System;
 using System.IO;
 
 namespace Ex01_01
 {
-
     class Program
     {
         private const int k_BinaryInputCount = 4;
-        private const int k_LegalSizeForBinaryNumberInput = 7;
 
         public static void Main()
         {
@@ -54,7 +52,6 @@ namespace Ex01_01
                 inputNumber = Console.ReadLine();
                 v_isLegalInput = IsLegalBinaryNumber(inputNumber, k_LegalSizeForBinaryNumberInput);
             }
-            return inputNumber;
         }
         public static int[] ConvertBinaryArrayToDecimal(string[] i_NumbersToConvert)
         {
@@ -132,5 +129,3 @@ namespace Ex01_01
             }
     }
 }
-    
-

@@ -85,7 +85,7 @@ namespace Ex01_01
             Console.WriteLine(average);
         }
         public static void PrintLongestOnesSequence(string[] i_BinaryRepresentationNumbers)
-      
+
         {
             int currentLongestOnesSequence = 0;
             int countOnes = 0;
@@ -109,7 +109,7 @@ namespace Ex01_01
                     }
                 }
                 countOnes = 0;
-                
+
             }
             Console.WriteLine($"The longest sequence of ones is {currentLongestOnesSequence} in the number {currentStringWithTheLongestOnesSequence}.");
 
@@ -126,10 +126,11 @@ namespace Ex01_01
 
 
 
-                    
+
                 }
                 currentTransitionsCount = 0;
             }
+        }
     }
 }
     

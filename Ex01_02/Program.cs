@@ -5,19 +5,17 @@ namespace Ex01_02
 {
     class Program
     {
-        static int currentNum = 1;
-
-        static void Main()
+        public static void Main()
         {
+            int currentNumberToPrint = 1;
             int totalLevels = 5; 
-            PrintTree(0, totalLevels);
+            PrintTree(0, totalLevels,currentNumberToPrint);
 
             PrintTrunk('F', totalLevels,8);
             PrintTrunk('G', totalLevels, 8);
         }
-
       
-        static void PrintTree(int i_currentLevel, int i_numberOfTotalLevels)
+        static void PrintTree(int i_currentLevel, int  i_numberOfTotalLevels,int io_currentNumberToPrint)
         {  
             if (i_currentLevel >= i_numberOfTotalLevels)
             { 
@@ -30,13 +28,13 @@ namespace Ex01_02
             int count = 1 + (2 * i_currentLevel); 
             for (int i = 0; i < count; i++)
             {
-                Console.Write(currentNum + " ");
-                currentNum++;
-                if (currentNum > 9)
-                    currentNum = 1;
+                Console.Write(io_currentNumberToPrint + " ");
+                io_currentNumberToPrint++;
+                if (io_currentNumberToPrint > 9)
+                    io_currentNumberToPrint = 1;
             }
             Console.WriteLine();
-            PrintTree(i_currentLevel + 1, i_numberOfTotalLevels);
+            PrintTree(i_currentLevel + 1, i_numberOfTotalLevels, io_currentNumberToPrint);
         }
 
         static void PrintTrunk(char letter, int totalLevels,int valueToPrintInTrunk)

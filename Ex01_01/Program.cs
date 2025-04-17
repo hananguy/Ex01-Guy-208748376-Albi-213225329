@@ -1,122 +1,182 @@
 ﻿using System;
-using System.Linq;
+using System.IO;
 
 namespace Ex01_01
 {
     class Program
     {
-        private const int k_NumberOfBinaryInputs = 4;
+        private const int k_BinaryInputCount = 4;
+        private const int k_LegalSizeForBinaryNumberInput = 7;
 
         public static void Main()
         {
-            Console.WriteLine("Please enter four 7-digit binary numbers:");
+            Console.WriteLine("Please enter four numbers in their binary representation:");
+            string[] binaryRepresentationNumbers = new string[k_BinaryInputCount];
 
-            BinaryNumber[] binaryNumbers = new BinaryNumber[k_NumberOfBinaryInputs];
-
-            for (int i = 0; i < k_NumberOfBinaryInputs; i++)
+            for (int i = 0; i < binaryRepresentationNumbers.Length; i++)
             {
-                string userBinaryInput;
-                do
+                binaryRepresentationNumbers[i] = GetBinaryNumberFromUser();
+            }
+
+            int[] decimalRepresentationNumbers = ConvertBinaryArrayToDecimal(binaryRepresentationNumbers);
+            Console.WriteLine("\nThe sorted array:");
+            SortAndPrint(decimalRepresentationNumbers);
+
+            CalcAverageAndPrint(decimalRepresentationNumbers);
+            PrintLongestOnesSequence(binaryRepresentationNumbers);
+            CountTransitions(binaryRepresentationNumbers);
+            PrintOnesStatistics(binaryRepresentationNumbers);
+        }
+
+        public static bool IsLegalBinaryNumber(string i_binaryNumber, int i_legalSize)
+        {
+            if (i_binaryNumber.Length != i_legalSize)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < i_legalSize; i++)
+            {
+                if (i_binaryNumber[i] != '0' && i_binaryNumber[i] != '1')
                 {
-                    Console.Write($"Enter binary number #{i + 1}: ");
-                    userBinaryInput = Console.ReadLine();
-                } while (!BinaryNumber.IsLegalBinaryNumber(userBinaryInput));
-
-                binaryNumbers[i] = new BinaryNumber(userBinaryInput);
-            }
-
-            Console.WriteLine("\nSorted by decimal value (descending):");
-            PrintSortedByDecimalDescending(binaryNumbers);
-
-            Console.WriteLine($"\nAverage decimal value: {CalculateAverageDecimal(binaryNumbers):F2}");
-
-            var numberWithLongestOnesSequence = binaryNumbers.OrderByDescending(i_Binary => i_Binary.LongestOnesSequence).First();
-            Console.WriteLine($"Longest sequence of 1's: {numberWithLongestOnesSequence.LongestOnesSequence} in {numberWithLongestOnesSequence.BinaryRepresentation}");
-
-            Console.WriteLine("\nTransitions from 0 to 1 or 1 to 0:");
-            foreach (var i_Binary in binaryNumbers)
-            {
-                Console.WriteLine($"{i_Binary.BinaryRepresentation} → {i_Binary.TransitionsCount} transitions");
-            }
-
-            int totalOnesCount = binaryNumbers.Sum(i_Binary => i_Binary.OnesCount);
-            var numberWithMostOnes = binaryNumbers.OrderByDescending(i_Binary => i_Binary.OnesCount).First();
-            Console.WriteLine($"\nTotal number of '1's: {totalOnesCount}");
-            Console.WriteLine($"Number with most '1's: {numberWithMostOnes.BinaryRepresentation} ({numberWithMostOnes.OnesCount} ones)");
-        }
-
-        public static void PrintSortedByDecimalDescending(BinaryNumber[] i_BinaryNumbers)
-        {
-            foreach (var i_Binary in i_BinaryNumbers.OrderByDescending(i_Binary => i_Binary.DecimalRepresentation))
-            {
-                Console.WriteLine($"{i_Binary.DecimalRepresentation} ({i_Binary.BinaryRepresentation})");
-            }
-        }
-
-        public static double CalculateAverageDecimal(BinaryNumber[] i_BinaryNumbers)
-        {
-            return i_BinaryNumbers.Average(i_Binary => i_Binary.DecimalRepresentation);
-        }
-    }
-
-    class BinaryNumber
-    {
-        private const int k_LegalBinaryLength = 7;
-
-        public string BinaryRepresentation { get; private set; }
-        public int DecimalRepresentation { get; private set; }
-        public int TransitionsCount { get; private set; }
-        public int LongestOnesSequence { get; private set; }
-        public int OnesCount { get; private set; }
-
-        public BinaryNumber(string i_BinaryInput)
-        {
-            BinaryRepresentation = i_BinaryInput;
-            DecimalRepresentation = Convert.ToInt32(i_BinaryInput, 2);
-            TransitionsCount = calculateTransitions();
-            LongestOnesSequence = calculateLongestSequenceOfOnes();
-            OnesCount = calculateTotalOnes();
-        }
-
-        public static bool IsLegalBinaryNumber(string i_BinaryInput)
-        {
-            return i_BinaryInput.Length == k_LegalBinaryLength && i_BinaryInput.All(i_Char => i_Char == '0' || i_Char == '1');
-        }
-
-        private int calculateTransitions()
-        {
-            int transitions = 0;
-            for (int i = 0; i < BinaryRepresentation.Length - 1; i++)
-            {
-                if (BinaryRepresentation[i] != BinaryRepresentation[i + 1])
-                {
-                    transitions++;
+                    return false;
                 }
             }
-            return transitions;
+
+            return true;
         }
 
-        private int calculateLongestSequenceOfOnes()
+        public static string GetBinaryNumberFromUser()
         {
-            int maxStreak = 0, currentStreak = 0;
-            foreach (char i_Bit in BinaryRepresentation)
+            string inputNumber = Console.ReadLine();
+            bool v_isLegalInput = IsLegalBinaryNumber(inputNumber, k_LegalSizeForBinaryNumberInput);
+
+            while (!v_isLegalInput)
             {
-                if (i_Bit == '1')
+                Console.WriteLine("Invalid input, please try again:");
+                inputNumber = Console.ReadLine();
+                v_isLegalInput = IsLegalBinaryNumber(inputNumber, k_LegalSizeForBinaryNumberInput);
+            }
+
+            return inputNumber;
+        }
+
+        public static int[] ConvertBinaryArrayToDecimal(string[] i_NumbersToConvert)
+        {
+            int[] intNumbersArray = new int[i_NumbersToConvert.Length];
+            for (int i = 0; i < i_NumbersToConvert.Length; i++)
+            {
+                intNumbersArray[i] = Convert.ToInt32(i_NumbersToConvert[i], 2);
+            }
+            return intNumbersArray;
+        }
+
+        public static void SortAndPrint(int[] i_NumbersArray)
+        {
+            Array.Sort(i_NumbersArray);
+            for (int i = i_NumbersArray.Length - 1; i >= 0; i--)
+            {
+                Console.Write($"{i_NumbersArray[i]} ");
+            }
+            Console.WriteLine();
+        }
+
+        public static void CalcAverageAndPrint(int[] i_NumbersArray)
+        {
+            int sumOfNumbers = 0;
+            for (int i = 0; i < i_NumbersArray.Length; i++)
+            {
+                sumOfNumbers += i_NumbersArray[i];
+            }
+
+            int average = sumOfNumbers / i_NumbersArray.Length;
+            Console.WriteLine($"Average: {average}");
+        }
+
+        public static void PrintLongestOnesSequence(string[] i_BinaryRepresentationNumbers)
+        {
+            int currentLongestOnesSequence = 0;
+            int countOnes = 0;
+            string currentStringWithTheLongestOnesSequence = "";
+
+            for (int i = 0; i < i_BinaryRepresentationNumbers.Length; i++)
+            {
+                foreach (char ch in i_BinaryRepresentationNumbers[i])
                 {
-                    currentStreak++;
-                    maxStreak = Math.Max(maxStreak, currentStreak);
+                    if (ch == '1')
+                    {
+                        countOnes++;
+                    }
+                    else
+                    {
+                        countOnes = 0;
+                    }
+
+                    if (countOnes > currentLongestOnesSequence)
+                    {
+                        currentLongestOnesSequence = countOnes;
+                        currentStringWithTheLongestOnesSequence = i_BinaryRepresentationNumbers[i];
+                    }
                 }
-                else
+
+                countOnes = 0;
+            }
+
+            Console.WriteLine($"The longest sequence of ones is {currentLongestOnesSequence} in the number {currentStringWithTheLongestOnesSequence}.");
+        }
+
+        public static void CountTransitions(string[] i_BinaryRepresentationNumbers)
+        {
+            Console.WriteLine("\nNumber of transitions (0↔1):");
+            for (int i = 0; i < i_BinaryRepresentationNumbers.Length; i++)
+            {
+                string current = i_BinaryRepresentationNumbers[i];
+                int transitionCount = 0;
+
+                for (int j = 0; j < current.Length - 1; j++)
                 {
-                    currentStreak = 0;
+                    if (current[j] != current[j + 1])
+                    {
+                        transitionCount++;
+                    }
+                }
+
+                Console.WriteLine($"The number {current} has {transitionCount} transitions.");
+            }
+        }
+        public static void PrintOnesStatistics(string[] i_BinaryRepresentationNumbers)
+        {
+            int totalOnes = 0;
+            int maxOnes = 0;
+            string binaryWithMaxOnes = "";
+
+            for (int i = 0; i < i_BinaryRepresentationNumbers.Length; i++)
+            {
+                int currentOnesCount = CountOnes(i_BinaryRepresentationNumbers[i]);
+                totalOnes += currentOnesCount;
+
+                if (currentOnesCount > maxOnes)
+                {
+                    maxOnes = currentOnesCount;
+                    binaryWithMaxOnes = i_BinaryRepresentationNumbers[i];
                 }
             }
-            return maxStreak;
-        }
 
-        private int calculateTotalOnes()
+            Console.WriteLine($"\nTotal number of '1' bits: {totalOnes}");
+            Console.WriteLine($"Number with the most '1' bits: {binaryWithMaxOnes} ({maxOnes} ones)");
+        }
+        
+        public static int CountOnes(string i_BinaryNumber)
         {
-            return BinaryRepresentation.Count(i_Char => i_Char == '1');
+            int count = 0;
+            foreach (char bit in i_BinaryNumber)
+            {
+                if (bit == '1')
+                {
+                    count++;
+                }
+            }
+            return count;
         }
     }
 }

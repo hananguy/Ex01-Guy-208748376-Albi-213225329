@@ -7,10 +7,9 @@ namespace Ex01_02
     {
         public static void Main()
         {
-            int currentNumberToPrint = 1;
+            int firstLevel = 1
             int totalLevels = 5; 
-            PrintTree(0, totalLevels,currentNumberToPrint);
-
+            PrintTree(0, totalLevels,firstLevel);
             PrintTrunk('F', totalLevels,8);
             PrintTrunk('G', totalLevels, 8);
         }
@@ -37,13 +36,13 @@ namespace Ex01_02
             PrintTree(i_currentLevel + 1, i_numberOfTotalLevels, io_currentNumberToPrint);
         }
 
-        static void PrintTrunk(char letter, int totalLevels,int valueToPrintInTrunk)
+        static void PrintTrunk(char i_letter, int i_totalLevels,int i_valueToPrintInTrunk)
         {
-            int spaces = (totalLevels - 1) * 2;
-            string indent = new string(' ', spaces);
-            Console.Write(letter);
-            Console.Write(indent);
-            Console.WriteLine($"|{valueToPrintInTrunk}|");
+            int spacesNeededForCurrentLevel = (i_totalLevels - 1) * 2;
+            string indentFromLeft = new string(' ', spacesNeededForCurrentLevel);
+            Console.Write(i_letter);
+            Console.Write(indentFromLeft);
+            Console.WriteLine($"|{i_valueToPrintInTrunk}|");
         }
     }
 }

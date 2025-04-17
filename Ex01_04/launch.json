@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": ".NET Console App",
+        "type": "coreclr",
+        "request": "launch",
+        "preLaunchTask": "build",
+        "program": "${workspaceFolder}/Ex01_04/bin/Debug/net8.0/Ex01_04.dll",
+        "args": [],
+        "cwd": "${workspaceFolder}/Ex01_04",
+        "stopAtEntry": false,
+        "console": "integratedTerminal"
+      }
+    ]
+  }

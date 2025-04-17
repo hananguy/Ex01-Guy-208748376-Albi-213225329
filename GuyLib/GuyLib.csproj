@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D40E89F2-1CFE-4332-980B-9D916B667660}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>Ex01_02</RootNamespace>
-    <AssemblyName>Ex01_02</AssemblyName>
+    <ProjectGuid>{0D07E57B-DB6D-47B6-940F-F5E9B1ACB94A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>GuyLib</RootNamespace>
+    <AssemblyName>GuyLib</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -39,7 +39,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Math.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

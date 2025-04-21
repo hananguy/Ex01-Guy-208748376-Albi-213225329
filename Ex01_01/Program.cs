@@ -13,15 +13,16 @@ namespace Ex01_01
             Console.WriteLine("Please enter four numbers in their binary representation:");
             string[] binaryRepresentationNumbers = new string[k_BinaryInputCount];
 
-            for (int i = 0; i < binaryRepresentationNumbers.Length; i++)
+            for (int binaryIndex = 0; binaryIndex < binaryRepresentationNumbers.Length; binaryIndex++)
             {
-                binaryRepresentationNumbers[i] = GetBinaryNumberFromUser();
+                binaryRepresentationNumbers[binaryIndex] = GetBinaryNumberFromUser();
             }
 
             int[] decimalRepresentationNumbers = ConvertBinaryArrayToDecimal(binaryRepresentationNumbers);
-            Console.WriteLine("\nThe sorted array:");
+            Console.WriteLine();
+            Console.WriteLine("The sorted array:");
             SortAndPrint(decimalRepresentationNumbers);
-
+            Console.WriteLine();
             CalcAverageAndPrint(decimalRepresentationNumbers);
             PrintLongestOnesSequence(binaryRepresentationNumbers);
             CountTransitions(binaryRepresentationNumbers);
@@ -35,9 +36,9 @@ namespace Ex01_01
                 return false;
             }
 
-            for (int i = 0; i < i_legalSize; i++)
+            for (int charIndex = 0; charIndex < i_legalSize; charIndex++)
             {
-                if (i_binaryNumber[i] != '0' && i_binaryNumber[i] != '1')
+                if (i_binaryNumber[charIndex] != '0' && i_binaryNumber[charIndex] != '1')
                 {
                     return false;
                 }
@@ -64,9 +65,9 @@ namespace Ex01_01
         public static int[] ConvertBinaryArrayToDecimal(string[] i_NumbersToConvert)
         {
             int[] intNumbersArray = new int[i_NumbersToConvert.Length];
-            for (int i = 0; i < i_NumbersToConvert.Length; i++)
+            for (int arrayIndex = 0; arrayIndex < i_NumbersToConvert.Length; arrayIndex++)
             {
-                intNumbersArray[i] = Convert.ToInt32(i_NumbersToConvert[i], 2);
+                intNumbersArray[arrayIndex] = Convert.ToInt32(i_NumbersToConvert[arrayIndex], 2);
             }
             return intNumbersArray;
         }
@@ -74,9 +75,9 @@ namespace Ex01_01
         public static void SortAndPrint(int[] i_NumbersArray)
         {
             Array.Sort(i_NumbersArray);
-            for (int i = i_NumbersArray.Length - 1; i >= 0; i--)
+            for (int numberIndex = i_NumbersArray.Length - 1; numberIndex >= 0; numberIndex--)
             {
-                Console.Write($"{i_NumbersArray[i]} ");
+                Console.Write(string.Format("{0} ", i_NumbersArray[numberIndex]));
             }
             Console.WriteLine();
         }
@@ -84,13 +85,13 @@ namespace Ex01_01
         public static void CalcAverageAndPrint(int[] i_NumbersArray)
         {
             int sumOfNumbers = 0;
-            for (int i = 0; i < i_NumbersArray.Length; i++)
+            for (int numberIndex = 0; numberIndex < i_NumbersArray.Length; numberIndex++)
             {
-                sumOfNumbers += i_NumbersArray[i];
+                sumOfNumbers += i_NumbersArray[numberIndex];
             }
 
             int average = sumOfNumbers / i_NumbersArray.Length;
-            Console.WriteLine($"Average: {average}");
+            Console.WriteLine(string.Format("Average: {0}", average));
         }
 
         public static void PrintLongestOnesSequence(string[] i_BinaryRepresentationNumbers)
@@ -99,11 +100,11 @@ namespace Ex01_01
             int countOnes = 0;
             string currentStringWithTheLongestOnesSequence = "";
 
-            for (int i = 0; i < i_BinaryRepresentationNumbers.Length; i++)
+            for (int binaryIndex = 0; binaryIndex < i_BinaryRepresentationNumbers.Length; binaryIndex++)
             {
-                foreach (char ch in i_BinaryRepresentationNumbers[i])
+                foreach (char binaryChar in i_BinaryRepresentationNumbers[binaryIndex])
                 {
-                    if (ch == '1')
+                    if (binaryChar == '1')
                     {
                         countOnes++;
                     }
@@ -115,33 +116,34 @@ namespace Ex01_01
                     if (countOnes > currentLongestOnesSequence)
                     {
                         currentLongestOnesSequence = countOnes;
-                        currentStringWithTheLongestOnesSequence = i_BinaryRepresentationNumbers[i];
+                        currentStringWithTheLongestOnesSequence = i_BinaryRepresentationNumbers[binaryIndex];
                     }
                 }
 
                 countOnes = 0;
             }
 
-            Console.WriteLine($"The longest sequence of ones is {currentLongestOnesSequence} in the number {currentStringWithTheLongestOnesSequence}.");
+            Console.WriteLine(string.Format("The longest sequence of ones is {0} in the number {1}", currentLongestOnesSequence, currentStringWithTheLongestOnesSequence));
         }
 
         public static void CountTransitions(string[] i_BinaryRepresentationNumbers)
         {
-            Console.WriteLine("\nNumber of transitions (0↔1):");
-            for (int i = 0; i < i_BinaryRepresentationNumbers.Length; i++)
+            Console.WriteLine();
+            Console.WriteLine("Number of transitions (0↔1):");
+            for (int binaryIndex = 0; binaryIndex < i_BinaryRepresentationNumbers.Length; binaryIndex++)
             {
-                string current = i_BinaryRepresentationNumbers[i];
+                string current = i_BinaryRepresentationNumbers[binaryIndex];
                 int transitionCount = 0;
 
-                for (int j = 0; j < current.Length - 1; j++)
+                for (int bitIndex = 0; bitIndex < current.Length - 1; bitIndex++)
                 {
-                    if (current[j] != current[j + 1])
+                    if (current[bitIndex] != current[bitIndex + 1])
                     {
                         transitionCount++;
                     }
                 }
 
-                Console.WriteLine($"The number {current} has {transitionCount} transitions.");
+                Console.WriteLine(string.Format("The number {0} has {1} transitions.", current, transitionCount));
             }
         }
         public static void PrintOnesStatistics(string[] i_BinaryRepresentationNumbers)
@@ -150,22 +152,22 @@ namespace Ex01_01
             int maxOnes = 0;
             string binaryWithMaxOnes = "";
 
-            for (int i = 0; i < i_BinaryRepresentationNumbers.Length; i++)
+            for (int binaryIndex = 0; binaryIndex < i_BinaryRepresentationNumbers.Length; binaryIndex++)
             {
-                int currentOnesCount = CountOnes(i_BinaryRepresentationNumbers[i]);
+                int currentOnesCount = CountOnes(i_BinaryRepresentationNumbers[binaryIndex]);
                 totalOnes += currentOnesCount;
 
                 if (currentOnesCount > maxOnes)
                 {
                     maxOnes = currentOnesCount;
-                    binaryWithMaxOnes = i_BinaryRepresentationNumbers[i];
+                    binaryWithMaxOnes = i_BinaryRepresentationNumbers[binaryIndex];
                 }
             }
-
-            Console.WriteLine($"\nTotal number of '1' bits: {totalOnes}");
-            Console.WriteLine($"Number with the most '1' bits: {binaryWithMaxOnes} ({maxOnes} ones)");
+            Console.WriteLine();
+            Console.WriteLine(string.Format("Total number of '1' bits: {0}", totalOnes));
+            Console.WriteLine(string.Format("Number with the most '1' bits: {0} ({1} ones)", binaryWithMaxOnes, maxOnes));
         }
-        
+
         public static int CountOnes(string i_BinaryNumber)
         {
             int count = 0;

@@ -13,8 +13,6 @@ namespace Ex01_03
             int numberOfRows = treeHeight - s_TrunkSize;
             Ex01_02.Program.PrintTree(0, numberOfRows, ref currentNumberToPrint);
             Ex01_02.Program.PrintTrunk(numberOfRows, currentNumberToPrint, s_TrunkSize);
-            
-
         }
 
     }

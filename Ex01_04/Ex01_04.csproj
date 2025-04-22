@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0D07E57B-DB6D-47B6-940F-F5E9B1ACB94A}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>GuyLib</RootNamespace>
-    <AssemblyName>GuyLib</AssemblyName>
+    <ProjectGuid>{4C2175D1-3CBD-4262-817E-95C1294F8DC5}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Ex01_04</RootNamespace>
+    <AssemblyName>Ex01_04</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -32,14 +32,11 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Math.cs" />
+    <Compile Include="Program.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

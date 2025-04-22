@@ -12,27 +12,27 @@ namespace Ex01_05
             string digitsSmallerThanLeftMostArray;
             string digistsDividedBy3Array;
             int leftMostDigit;
+            string smallerDigitsDisplay;
+
             string userInput = GetNumberFromUser();
-            int userNumberInteger = Convert.ToInt32(userInput);
             int numOfDigitsSmallerThanLeftMost = CountDigitsSmallerThanLeftmost(userInput, out digitsSmallerThanLeftMostArray, out leftMostDigit);
             int numberOfDigitsDividedByThree = CountDigitsDivisibleBy3(userInput, out digistsDividedBy3Array);
             int maxMinDigitDifference = GetMaxMinDigitDifference(userInput);
             int maxDigitNumberOfAppearances = GetMostFrequentDigitAndCount(userInput, out maxDigit);
-            Console.WriteLine($"Input: {userInput}");
-            string smallerDigitsDisplay;
             if (numOfDigitsSmallerThanLeftMost > 0)
             {
                 smallerDigitsDisplay = digitsSmallerThanLeftMostArray;
             }
+
             else
             {
                 smallerDigitsDisplay = "None";
             }
 
-            Console.WriteLine($"Leftmost digit: {leftMostDigit}. " + $"Digits smaller than it (excluding the first): {smallerDigitsDisplay}. " + $"Total: {numOfDigitsSmallerThanLeftMost}."); Console.WriteLine($"Digits divisible by 3: {digistsDividedBy3Array}. Total: {numberOfDigitsDividedByThree}.");
-            Console.WriteLine($"Difference between the largest and smallest digit: {maxMinDigitDifference}");
-            Console.WriteLine($"Most frequent digit: {maxDigit} (appears {maxDigitNumberOfAppearances} times)");
-
+            Console.WriteLine(string.Format("Leftmost digit: {0}. Digits smaller than it (excluding the first): {1}. Total: {2}.", leftMostDigit, smallerDigitsDisplay, numOfDigitsSmallerThanLeftMost));
+            Console.WriteLine(string.Format("Digits divisible by 3: {0}. Total: {1}.", digistsDividedBy3Array, numberOfDigitsDividedByThree));
+            Console.WriteLine(string.Format("Difference between the largest and smallest digit: {0}", maxMinDigitDifference));
+            Console.WriteLine(string.Format("Most frequent digit: {0} (appears {1} times)", maxDigit, maxDigitNumberOfAppearances));
         }
         public static string GetNumberFromUser()
         {
@@ -88,21 +88,6 @@ namespace Ex01_05
 
             return countNumOfDigitsSmallerThanMostLeft;
         }
-    
-        public static int ReadIntFromUser()
-        {
-            Console.WriteLine("Please enter an 8‑digit integer: ");
-            string userInput = Console.ReadLine();
-            int resultInteger;
-
-            while(int.TryParse(userInput, out resultInteger) == false || userInput.Length != 8)
-            {
-                Console.Write("Please enter a valid integer (8-digit integer): ");
-                userInput = Console.ReadLine();
-            }
-
-            return resultInteger;
-        }
         public static int CountDigitsDivisibleBy3(string i_Number, out string o_NumberDividedBy3)
         { 
             if (string.IsNullOrEmpty(i_Number))
@@ -114,13 +99,7 @@ namespace Ex01_05
             string strNumber = i_Number;
             StringBuilder sbNumbersDividedBy3 = new System.Text.StringBuilder();
             int numOfDigitsDivisibleBy3 = 0;
-
-            if (strNumber == "0")
-            {
-                o_NumberDividedBy3 = "0";
-                return 1;
-            }
-
+   
             foreach (char currChar in strNumber)
             {
                 int currDigit = currChar - '0';
@@ -197,7 +176,5 @@ namespace Ex01_05
 
             return maxCount;
         }
-
     }
-
 }
